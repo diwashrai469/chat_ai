@@ -1,3 +1,4 @@
+import 'package:chat_ai/common/utils/constant.dart';
 import 'package:chat_ai/features/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,8 +18,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+              fontFamily: "Poppins",
               brightness: Brightness.dark,
               scaffoldBackgroundColor: Colors.grey.shade900),
           home: child,
