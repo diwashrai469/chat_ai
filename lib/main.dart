@@ -1,9 +1,11 @@
 import 'package:chat_ai/common/utils/constant.dart';
 import 'package:chat_ai/features/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
