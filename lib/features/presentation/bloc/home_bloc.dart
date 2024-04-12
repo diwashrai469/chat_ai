@@ -19,7 +19,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ),
         ) {
     on<NewTextMessageGeneratEvent>(_handleNewChatMessages);
-    on<LocalStorageEmptyEvent>(_handleLocalStorage);
   }
 
   List<PreviousChatMessageModel> messages = [];
@@ -71,14 +70,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
     );
   }
-
-  FutureOr<void> _handleLocalStorage(
-      LocalStorageEmptyEvent event, Emitter<HomeState> emit) {
-    localStorage.remove("messages");
-    emit(ChatSucessState(messages: const []));
-  }
 }
 
+//dont know why but the return type of local storage messgaes is lIST<DYNAMIC> instead of list<PreviousChatMessageModel>
+//so converting the type to List<PreviousChatMessageModel>
 List<PreviousChatMessageModel> previoudData() {
   List<dynamic> messagesDynamic = GetStorage().read("messages") ?? [];
   return messagesDynamic.map((jsonString) {
