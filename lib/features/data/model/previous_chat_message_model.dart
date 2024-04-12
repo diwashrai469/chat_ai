@@ -18,8 +18,8 @@ class PreviousChatMessageModel {
     return PreviousChatMessageModel(
       role: map['role'] as String,
       parts: List<ChatPartModel>.from(
-        (map['parts'] as List<int>).map<ChatPartModel>(
-          (x) => ChatPartModel.fromMap(x as Map<String, dynamic>),
+        (map['parts'] as List<dynamic>).map<ChatPartModel>(
+          (partMap) => ChatPartModel.fromMap(partMap as Map<String, dynamic>),
         ),
       ),
     );

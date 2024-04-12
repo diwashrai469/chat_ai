@@ -3,8 +3,10 @@ import 'package:chat_ai/features/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main(List<String> args) async {
+  await GetStorage.init();
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
