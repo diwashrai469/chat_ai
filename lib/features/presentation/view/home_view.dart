@@ -1,3 +1,4 @@
+import 'package:chat_ai/common/utils/constant.dart';
 import 'package:chat_ai/common/widgets/k_textfield.dart';
 import 'package:chat_ai/features/data/model/previous_chat_message_model.dart';
 import 'package:chat_ai/features/presentation/bloc/home_bloc.dart';
@@ -14,7 +15,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  ScrollController listScrollController = ScrollController();
   final TextEditingController messageController = TextEditingController();
 
   @override
@@ -31,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
               onPressed: () {
                 setState(
                   () {
-                    GetStorage().remove("messages");
+                    GetStorage().remove(localStorageKeyForMessage);
                   },
                 );
               },
@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                           ],
                         )
                       : ListView.builder(
-                          controller: listScrollController,
+                          controller: homeBloc.listScrollController,
                           physics: const BouncingScrollPhysics(),
                           itemCount: data.length,
                           itemBuilder: (context, index) {
@@ -114,28 +114,33 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      bottom: 40.h, top: 15.h, left: 20.w, right: 20.w),
-                  child: Ktextfield(
-                    homeBloc: homeBloc,
-                    controller: messageController,
-                    onTap: () {
-                      if ((messageController.text.isNotEmpty)) {
-                        homeBloc.add(
-                          NewTextMessageGeneratEvent(
-                              inputMessgae: messageController.text),
-                        );
-                        if (listScrollController.hasClients) {
-                          listScrollController.animateTo(
-                            listScrollController.position.maxScrollExtent *
-                                1.005,
-                            curve: Curves.easeOut,
-                            duration: const Duration(milliseconds: 500),
+                      bottom: 30.h, top: 15.h, left: 20.w, right: 20.w),
+                  child: SizedBox(
+                    height: 70.h,
+                    child: Ktextfield(
+                      homeBloc: homeBloc,
+                      controller: messageController,
+                      onTap: () {
+                        if ((messageController.text.isNotEmpty)) {
+                          homeBloc.add(
+                            NewTextMessageGeneratEvent(
+                                inputMessgae: messageController.text),
                           );
-                        }
 
-                        messageController.clear();
-                      }
-                    },
+                          FocusScope.of(context).unfocus();
+                          if (homeBloc.listScrollController.hasClients) {
+                            homeBloc.listScrollController.animateTo(
+                              homeBloc.listScrollController.position
+                                  .maxScrollExtent,
+                              curve: Curves.fastOutSlowIn,
+                              duration: Duration(seconds: 2),
+                            );
+                          }
+
+                          messageController.clear();
+                        }
+                      },
+                    ),
                   ),
                 )
               ],

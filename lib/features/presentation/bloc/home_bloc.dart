@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:chat_ai/common/utils/constant.dart';
 import 'package:chat_ai/core/network_services.dart';
 import 'package:chat_ai/features/data/model/chat_messages_response_model.dart';
 import 'package:chat_ai/features/data/model/previous_chat_message_model.dart';
@@ -22,6 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   List<PreviousChatMessageModel> messages = [];
+  ScrollController listScrollController = ScrollController();
 
   GetStorage localStorage = GetStorage();
   IHomeRepository homeRepository = HomeRepository();
@@ -39,7 +41,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     );
     emit(ChatSucessState(messages: messages));
-    await localStorage.write("messages", messages);
+    await localStorage.write(localStorageKeyForMessage, messages);
     isTextGenerating = true;
 
     var result = await homeRepository.getChatResponseFromAI(messages);
@@ -64,7 +66,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ),
         );
         emit(ChatSucessState(messages: messages));
-        await localStorage.write("messages", messages);
+        await localStorage.write(localStorageKeyForMessage, messages);
 
         isTextGenerating = false;
       },
@@ -75,7 +77,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 //dont know why but the return type of local storage messgaes is lIST<DYNAMIC> instead of list<PreviousChatMessageModel>
 //so converting the type to List<PreviousChatMessageModel>
 List<PreviousChatMessageModel> previoudData() {
-  List<dynamic> messagesDynamic = GetStorage().read("messages") ?? [];
+  List<dynamic> messagesDynamic =
+      GetStorage().read(localStorageKeyForMessage) ?? [];
   return messagesDynamic.map((jsonString) {
     return PreviousChatMessageModel.fromJson(jsonString);
   }).toList();

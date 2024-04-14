@@ -1,4 +1,3 @@
-import 'package:chat_ai/common/utils/constant.dart';
 import 'package:chat_ai/features/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
-          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               fontFamily: "Poppins",
