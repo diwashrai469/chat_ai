@@ -40,6 +40,7 @@ dependencies:
   oktoast:
   flutter_dotenv: ^5.1.0
   get_storage: ^2.1.1
+  connectivity_plus: ^6.0.2
 
 dev_dependencies:
   flutter_test:

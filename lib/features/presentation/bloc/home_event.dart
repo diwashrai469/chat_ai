@@ -8,3 +8,5 @@ class NewTextMessageGeneratEvent extends HomeEvent {
 
   NewTextMessageGeneratEvent({required this.inputMessgae});
 }
+
+class NewChatEvent extends HomeEvent {}

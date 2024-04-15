@@ -1,12 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:chat_ai/features/presentation/bloc/home_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 class Ktextfield extends StatelessWidget {
-  final HomeBloc homeBloc;
+  final bool isGererating;
 
   final TextEditingController? controller;
   final void Function()? onTap;
@@ -15,7 +13,7 @@ class Ktextfield extends StatelessWidget {
     super.key,
     this.controller,
     this.onTap,
-    required this.homeBloc,
+    required this.isGererating,
   });
 
   @override
@@ -25,7 +23,7 @@ class Ktextfield extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: GestureDetector(
           onTap: onTap,
-          child: homeBloc.isTextGenerating
+          child: isGererating
               ? LottieBuilder.asset(
                   "assets/loading.json",
                   height: 50.h,

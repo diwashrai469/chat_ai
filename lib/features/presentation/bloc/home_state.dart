@@ -7,6 +7,7 @@ final class ChatLoadingState extends HomeState {}
 
 final class ChatSucessState extends HomeState {
   final List<PreviousChatMessageModel> messages;
+  final bool isTextGenerating;
 
-  ChatSucessState({required this.messages});
+  ChatSucessState({required this.messages, this.isTextGenerating = false});
 }
