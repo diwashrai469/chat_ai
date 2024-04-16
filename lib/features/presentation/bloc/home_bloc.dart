@@ -7,6 +7,7 @@ import 'package:chat_ai/features/data/model/previous_chat_message_model.dart';
 import 'package:chat_ai/features/data/repository/home_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 part 'home_event.dart';
 part 'home_state.dart';
@@ -81,6 +82,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             localStorageKeyForMessage,
             messages.map((message) => message.toJson()).toList(),
           );
+          if (listScrollController.hasClients) {
+            listScrollController.animateTo(
+              listScrollController.position.maxScrollExtent * 1.02.h,
+              curve: Curves.fastOutSlowIn,
+              duration: const Duration(milliseconds: 500),
+            );
+          }
           messages = [];
         },
       );

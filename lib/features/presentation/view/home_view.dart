@@ -60,8 +60,8 @@ class HomeView extends StatelessWidget {
                           )
                         : ListView.builder(
                             controller: homeBloc.listScrollController,
-                            physics: const BouncingScrollPhysics(),
                             itemCount: data.length,
+                            physics: ClampingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: EdgeInsets.all(8.dg),
@@ -125,23 +125,27 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  void ontabMessage(
-      {required TextEditingController messageController,
-      required HomeBloc homeBloc,
-      required BuildContext context}) {
-    if ((messageController.text.isNotEmpty)) {
+  void ontabMessage({
+    required TextEditingController messageController,
+    required HomeBloc homeBloc,
+    required BuildContext context,
+  }) {
+    if (messageController.text.isNotEmpty) {
       homeBloc.add(
         NewTextMessageGeneratEvent(inputMessgae: messageController.text),
       );
 
       FocusScope.of(context).unfocus();
-      if (homeBloc.listScrollController.hasClients) {
-        homeBloc.listScrollController.animateTo(
-          homeBloc.listScrollController.position.maxScrollExtent,
-          curve: Curves.fastOutSlowIn,
-          duration: const Duration(milliseconds: 500),
-        );
-      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (homeBloc.listScrollController.hasClients) {
+          homeBloc.listScrollController.animateTo(
+            homeBloc.listScrollController.position.maxScrollExtent,
+            curve: Curves.linear,
+            duration: const Duration(milliseconds: 500),
+          );
+        }
+      });
     }
   }
 }
