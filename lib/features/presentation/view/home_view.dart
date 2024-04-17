@@ -14,13 +14,19 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Chat AI"),
+        title: Text(
+          "Chat AI",
+          style: TextStyle(fontSize: 20.sp),
+        ),
         actions: [
           TextButton(
               onPressed: () {
                 homeBloc.add(NewChatEvent());
               },
-              child: const Text("New chat")),
+              child: Text(
+                "New chat",
+                style: TextStyle(fontSize: 15.sp),
+              )),
           SizedBox(
             width: 10.w,
           )
@@ -61,7 +67,7 @@ class HomeView extends StatelessWidget {
                         : ListView.builder(
                             controller: homeBloc.listScrollController,
                             itemCount: data.length,
-                            physics: ClampingScrollPhysics(),
+                            physics: const ClampingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Container(
                                 margin: EdgeInsets.all(8.dg),
@@ -75,23 +81,26 @@ class HomeView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     data[index].role == "user"
-                                        ? const Text(
+                                        ? Text(
                                             "User :",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15.sp),
                                           )
-                                        : const Text(
+                                        : Text(
                                             "AI :",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15.sp),
                                           ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       data[index].parts.first.text,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w200,
+                                          fontSize: 15.sp),
                                     ),
                                   ],
                                 ),
@@ -137,15 +146,17 @@ class HomeView extends StatelessWidget {
 
       FocusScope.of(context).unfocus();
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (homeBloc.listScrollController.hasClients) {
-          homeBloc.listScrollController.animateTo(
-            homeBloc.listScrollController.position.maxScrollExtent,
-            curve: Curves.linear,
-            duration: const Duration(milliseconds: 500),
-          );
-        }
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          if (homeBloc.listScrollController.hasClients) {
+            homeBloc.listScrollController.animateTo(
+              homeBloc.listScrollController.position.maxScrollExtent,
+              curve: Curves.linear,
+              duration: const Duration(milliseconds: 500),
+            );
+          }
+        },
+      );
     }
   }
 }

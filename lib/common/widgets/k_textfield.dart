@@ -29,13 +29,21 @@ class Ktextfield extends StatelessWidget {
                   height: 50.h,
                 )
               : Container(
-                  margin: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
+                  margin: Theme.of(context).platform == TargetPlatform.iOS
+                      ? EdgeInsets.only(right: 9.w, top: 3.h, bottom: 3.h)
+                      : EdgeInsets.only(right: 12.w, top: 8.h, bottom: 8.h),
                   decoration: BoxDecoration(
                       color: Colors.grey.shade800,
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Icon(CupertinoIcons.up_arrow),
+                  child: Icon(
+                    CupertinoIcons.up_arrow,
+                    size: Theme.of(context).platform == TargetPlatform.iOS
+                        ? 22.h
+                        : 24.h,
+                  ),
                 ),
         ),
+        hintStyle: TextStyle(fontSize: 17.sp),
         hintText: "  Enter your promt...",
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
